@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TechStore — tecnologia para acompanhar você.">
+  <title>TechStore | Tecnologia para você</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #171923;
+      --muted: #727887;
+      --brand: #6558e8;
+      --brand-dark: #5145cb;
+      --surface: #ffffff;
+      --background: #f6f7fb;
+      --line: #e9eaf1;
+      --success: #16865c;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--background);
+    }
+    a { text-decoration: none; }
+    .top-strip {
+      background: #171923;
+      color: #e9e9f2;
+      font-size: .78rem;
+      letter-spacing: .02em;
+    }
+    .navbar {
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+    }
+    .navbar-brand {
+      color: var(--ink);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -.07em;
+    }
+    .brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-right: 7px;
+      border-radius: 11px;
+      color: #fff;
+      background: var(--brand);
+      font-size: 1rem;
+      letter-spacing: -.04em;
+    }
+    .nav-link { color: #555b69; font-weight: 600; }
+    .nav-link:hover, .nav-link.active { color: var(--brand); }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 250px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8f8fb;
+    }
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: .9rem;
+    }
+    .icon-btn {
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      background: white;
+      font-size: 1.1rem;
+    }
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      display: grid;
+      place-items: center;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 20px;
+      color: white;
+      background: var(--brand);
+      font-size: .68rem;
+      font-weight: 800;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(151,141,255,.45), transparent 30%),
+        linear-gradient(115deg, #171923 0%, #29265b 58%, #6558e8 100%);
+    }
+    .hero::after {
+      content: "TS";
+      position: absolute;
+      right: 6%;
+      bottom: -100px;
+      color: rgba(255,255,255,.07);
+      font-size: clamp(13rem, 30vw, 25rem);
+      font-weight: 800;
+      letter-spacing: -.12em;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 30px;
+      color: #e7e4ff;
+      background: rgba(255,255,255,.09);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      max-width: 620px;
+      margin: 20px 0 14px;
+      font-size: clamp(2.4rem, 5vw, 4.3rem);
+      font-weight: 800;
+      letter-spacing: -.065em;
+      line-height: 1.03;
+    }
+    .hero p { max-width: 490px; color: #d6d5eb; line-height: 1.75; }
+    .btn-brand {
+      padding: 12px 19px;
+      border: 0;
+      border-radius: 11px;
+      color: white;
+      background: var(--brand);
+      font-weight: 700;
+    }
+    .btn-brand:hover { color: white; background: var(--brand-dark); }
+    .btn-light-custom {
+      padding: 12px 19px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 11px;
+      color: white;
+      background: rgba(255,255,255,.08);
+      font-weight: 700;
+    }
+    .hero-art {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: 270px;
+    }
+    .hero-device {
+      display: grid;
+      place-items: center;
+      width: min(260px, 75%);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 38% 62% 55% 45% / 45% 42% 58% 55%;
+      background: rgba(255,255,255,.1);
+      box-shadow: 0 25px 80px rgba(0,0,0,.18), inset 0 0 45px rgba(255,255,255,.08);
+      transform: rotate(-8deg);
+    }
+    .hero-device i { color: white; font-size: 7rem; transform: rotate(8deg); }
+    .benefit {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      height: 100%;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: white;
+    }
+    .benefit-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      color: var(--brand);
+      background: #f0efff;
+      font-size: 1.2rem;
+    }
+    .benefit strong { display: block; font-size: .88rem; }
+    .benefit small { color: var(--muted); font-size: .76rem; }
+    .section-title { font-weight: 800; letter-spacing: -.045em; }
+    .section-subtitle { color: var(--muted); font-size: .92rem; }
+    .category-card {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      color: var(--ink);
+      background: white;
+      transition: .2s ease;
+    }
+    .category-card:hover, .category-card.selected {
+      border-color: #c8c3ff;
+      background: #f7f6ff;
+      transform: translateY(-2px);
+    }
+    .category-card i { color: var(--brand); font-size: 1.45rem; }
+    .category-card span { font-weight: 700; font-size: .9rem; }
+    .product-card {
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: white;
+      transition: .22s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(30,33,55,.08);
+    }
+    .product-image {
+      position: relative;
+      display: grid;
+      place-items: center;
+      height: 190px;
+      margin: 10px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #f2f2fa, #e9eaf4);
+    }
+    .product-image i { color: #5e5a83; font-size: 5rem; }
+    .product-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 8px;
+      border-radius: 7px;
+      color: #5145cb;
+      background: #e9e7ff;
+      font-size: .68rem;
+      font-weight: 800;
+    }
+    .product-body { padding: 7px 17px 17px; }
+    .product-category {
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .product-name {
+      min-height: 43px;
+      margin: 7px 0;
+      font-size: .98rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .product-rating { color: #e6a32a; font-size: .76rem; }
+    .product-price { font-size: 1.2rem; font-weight: 800; letter-spacing: -.04em; }
+    .product-old { color: #9a9eaa; font-size: .78rem; text-decoration: line-through; }
+    .stock { color: var(--success); font-size: .75rem; font-weight: 700; }
+    .add-btn {
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      border-radius: 10px;
+      color: white;
+      background: var(--ink);
+      font-size: .84rem;
+      font-weight: 700;
+    }
+    .add-btn:hover { background: var(--brand); }
+    .promo {
+      overflow: hidden;
+      border-radius: 20px;
+      color: white;
+      background: linear-gradient(105deg, #28254f, #6558e8);
+    }
+    .promo p { color: #dcdaf7; }
+    .newsletter {
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+    }
+    footer { color: #d7d8e2; background: #171923; }
+    footer a { color: #b9bbca; }
+    footer a:hover { color: white; }
+    .footer-heading { color: white; font-weight: 700; }
+    .offcanvas { border: 0; }
+    .cart-item {
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-thumb {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      color: var(--brand);
+      background: #f0efff;
+      font-size: 1.5rem;
+    }
+    .qty-control button {
+      width: 25px;
+      height: 25px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: white;
+    }
+    @media (max-width: 767.98px) {
+      .search-box { min-width: 0; width: 100%; }
+      .hero { border-radius: 18px; }
+      .hero-art { min-height: 180px; }
+      .hero-device { width: 170px; }
+      .hero-device i { font-size: 5rem; }
+      .newsletter { padding: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-strip py-2">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <span><i class="bi bi-truck me-2"></i>Frete grátis em compras selecionadas</span>
+      <span class="d-none d-md-inline">Tecnologia, qualidade e praticidade em um só lugar.</span>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <span class="brand-mark">T</span>techstore<span class="text-primary">.</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-lg-auto my-3 my-lg-0 gap-lg-2">
+          <li class="nav-item"><a class="nav-link active" href="#inicio">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#categorias">Categorias</a></li>
+          <li class="nav-item"><a class="nav-link" href="#produtos">Produtos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <a class="icon-btn" href="login.php" aria-label="Entrar"><i class="bi bi-person"></i></a>
+          <button class="icon-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-label="Abrir carrinho">
+            <i class="bi bi-bag"></i><span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="inicio" class="container pt-4 pt-lg-5">
+      <div class="hero p-4 p-md-5">
+        <div class="row align-items-center">
+          <div class="col-lg-7 hero-content py-3 py-lg-4">
+            <span class="eyebrow"><i class="bi bi-stars"></i> Seu próximo upgrade começa aqui</span>
+            <h1>Tecnologia que acompanha o seu ritmo.</h1>
+            <p>Encontre periféricos, componentes e acessórios para estudar, trabalhar, jogar e criar. Tudo em um só lugar.</p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <a class="btn btn-brand" href="#produtos">Explorar produtos <i class="bi bi-arrow-right ms-2"></i></a>
+              <a class="btn btn-light-custom" href="#categorias">Ver categorias</a>
+            </div>
+          </div>
+          <div class="col-lg-5 hero-art">
+            <div class="hero-device"><i class="bi bi-pc-display"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-4">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <div class="benefit"><span class="benefit-icon"><i class="bi bi-shield-check"></i></span><div><strong>Compra segura</strong><small>Seus dados protegidos</small></div></div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="benefit"><span class="benefit-icon"><i class="bi bi-box-seam"></i></span><div><strong>Produtos selecionados</strong><small>Qualidade para seu setup</small></div></div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="benefit"><span class="benefit-icon"><i class="bi bi-headset"></i></span><div><strong>Suporte ao cliente</strong><small>Ajuda quando precisar</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="categorias" class="container py-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+        <div><h2 class="section-title mb-1">Explore por categoria</h2><p class="section-subtitle mb-0">Encontre rapidamente o que você procura.</p></div>
+        <button class="btn btn-sm btn-outline-secondary rounded-3" onclick="filterCategory('Todas')">Ver tudo</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-6 col-md-3"><button class="category-card w-100 text-start" onclick="filterCategory('Computadores')"><i class="bi bi-pc-display"></i><span>Computadores</span></button></div>
+        <div class="col-6 col-md-3"><button class="category-card w-100 text-start" onclick="filterCategory('Periféricos')"><i class="bi bi-keyboard"></i><span>Periféricos</span></button></div>
+        <div class="col-6 col-md-3"><button class="category-card w-100 text-start" onclick="filterCategory('Componentes')"><i class="bi bi-cpu"></i><span>Componentes</span></button></div>
+        <div class="col-6 col-md-3"><button class="category-card w-100 text-start" onclick="filterCategory('Acessórios')"><i class="bi bi-headphones"></i><span>Acessórios</span></button></div>
+      </div>
+    </section>
+
+    <section id="produtos" class="container py-4 py-lg-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+        <div><span class="text-primary fw-bold small text-uppercase">Seleção TechStore</span><h2 class="section-title mb-1">Produtos em destaque</h2><p class="section-subtitle mb-0">Confira alguns itens para o seu setup.</p></div>
+        <div class="d-flex gap-2 align-items-center">
+          <label for="categoryFilter" class="small text-secondary d-none d-sm-inline">Categoria</label>
+          <select id="categoryFilter" class="form-select form-select-sm rounded-3" style="width:auto" onchange="filterCategory(this.value)">
+            <option>Todas</option><option>Computadores</option><option>Periféricos</option><option>Componentes</option><option>Acessórios</option>
+          </select>
+        </div>
+      </div>
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6">
+          <div class="search-box w-100"><i class="bi bi-search text-secondary"></i><input id="searchInput" type="search" placeholder="Buscar produto..." aria-label="Buscar produto"></div>
+        </div>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-md-end">
+          <span class="small text-secondary" id="resultCount">6 produtos encontrados</span>
+        </div>
+      </div>
+      <div class="row g-3" id="productGrid" aria-live="polite"></div>
+      <div id="emptyState" class="text-center py-5 d-none">
+        <i class="bi bi-search display-5 text-secondary"></i>
+        <h3 class="h5 mt-3">Nenhum produto encontrado</h3>
+        <p class="text-secondary">Tente buscar por outro nome ou categoria.</p>
+      </div>
+    </section>
+
+    <section class="container pb-5">
+      <div class="promo p-4 p-md-5">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <span class="small fw-bold text-uppercase" style="color:#d9d5ff">Monte seu espaço</span>
+            <h2 class="fw-bold mt-2 mb-2" style="letter-spacing:-.05em">Seu setup, suas possibilidades.</h2>
+            <p class="mb-0">Escolha os equipamentos que combinam com a sua rotina e dê o próximo passo.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end mt-3 mt-lg-0"><a href="#produtos" class="btn btn-light rounded-3 fw-bold px-4 py-3">Encontrar produtos <i class="bi bi-arrow-up-right ms-2"></i></a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="container pb-5">
+      <div class="newsletter text-center">
+        <span class="text-primary fw-bold small text-uppercase">TechStore</span>
+        <h2 class="section-title mt-2">Tecnologia para o seu dia a dia.</h2>
+        <p class="section-subtitle mx-auto mb-0" style="max-width:600px">Uma loja demonstrativa criada para reunir produtos de informática em uma experiência simples, organizada e responsiva.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <a class="navbar-brand text-white" href="#"><span class="brand-mark">T</span>techstore<span class="text-primary">.</span></a>
+          <p class="small mt-3" style="max-width:340px;color:#aeb0c0">Tecnologia, componentes e acessórios para acompanhar suas ideias.</p>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="footer-heading mb-3">Navegação</div>
+          <div class="d-grid gap-2 small"><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a></div>
+        </div>
+        <div class="col-6 col-md-4">
+          <div class="footer-heading mb-3">Atendimento</div>
+          <div class="d-grid gap-2 small"><a href="mailto:contato@techstore.local">contato@techstore.local</a><span>Segunda a sexta, das 9h às 18h</span></div>
+        </div>
+      </div>
+      <hr class="my-4" style="border-color:#3a3c49">
+      <div class="d-flex flex-wrap justify-content-between gap-2 small" style="color:#aeb0c0"><span>© 2026 TechStore. Projeto acadêmico demonstrativo.</span><span>Feito para aprender e construir.</span></div>
+    </div>
+  </footer>
+
+  <!-- Carrinho lateral: demonstração local; na versão PHP será usado $_SESSION -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel" aria-labelledby="cartTitle">
+    <div class="offcanvas-header border-bottom">
+      <div><h5 class="offcanvas-title fw-bold" id="cartTitle">Seu carrinho</h5><small class="text-secondary" id="cartSubtitle">0 itens</small></div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItems" class="flex-grow-1"></div>
+      <div class="border-top pt-3">
+        <div class="d-flex justify-content-between mb-3"><span class="text-secondary">Subtotal</span><strong id="cartTotal">R$ 0,00</strong></div>
+        <a href="checkout.php" class="btn btn-brand w-100">Continuar para checkout <i class="bi bi-arrow-right ms-2"></i></a>
+        <p class="small text-secondary text-center mt-2 mb-0">A finalização será integrada ao PHP.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Dados de demonstração. Na versão integrada, virão do banco MySQL via PHP.
+    const products = [
+      {id:1, name:"Notebook Pro 15", category:"Computadores", price:4299.90, old:4699.90, stock:8, icon:"bi-laptop", tag:"Destaque", rating:"4,9"},
+      {id:2, name:"Teclado Mecânico RGB", category:"Periféricos", price:289.90, old:349.90, stock:15, icon:"bi-keyboard", tag:"Oferta", rating:"4,8"},
+      {id:3, name:"Mouse Gamer 7200 DPI", category:"Periféricos", price:159.90, old:null, stock:22, icon:"bi-mouse", tag:"Mais vendido", rating:"4,7"},
+      {id:4, name:"Placa de Vídeo RTX", category:"Componentes", price:2899.90, old:3199.90, stock:5, icon:"bi-gpu-card", tag:"Destaque", rating:"4,9"},
+      {id:5, name:"Headset Surround", category:"Acessórios", price:349.90, old:null, stock:12, icon:"bi-headset", tag:"Novo", rating:"4,6"},
+      {id:6, name:"Monitor 27 polegadas", category:"Computadores", price:1199.90, old:1349.90, stock:9, icon:"bi-display", tag:"Oferta", rating:"4,8"}
+    ];
+
+    let cart = [];
+    let activeCategory = "Todas";
+    const money = value => value.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
+
+    function renderProducts() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const filtered = products.filter(p =>
+        (activeCategory === "Todas" || p.category === activeCategory) &&
+        (p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query))
+      );
+      document.getElementById("resultCount").textContent = `${filtered.length} produto(s) encontrado(s)`;
+      document.getElementById("emptyState").classList.toggle("d-none", filtered.length !== 0);
+      document.getElementById("productGrid").innerHTML = filtered.map(p => `
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+          <article class="product-card">
+            <div class="product-image">
+              <span class="product-tag">${p.tag}</span>
+              <i class="bi ${p.icon}" aria-hidden="true"></i>
+            </div>
+            <div class="product-body">
+              <div class="product-category">${p.category}</div>
+              <h3 class="product-name">${p.name}</h3>
+              <div class="product-rating mb-2"><i class="bi bi-star-fill"></i> ${p.rating} <span class="text-secondary">• avaliações</span></div>
+              <div class="d-flex align-items-baseline gap-2 flex-wrap">
+                <span class="product-price">${money(p.price)}</span>
+                ${p.old ? `<span class="product-old">${money(p.old)}</span>` : ""}
+              </div>
+              <div class="stock mt-2 mb-3"><i class="bi bi-check-circle-fill me-1"></i>${p.stock} disponíveis</div>
+              <button class="add-btn" onclick="addToCart(${p.id})"><i class="bi bi-bag-plus me-2"></i>Adicionar ao carrinho</button>
+            </div>
+          </article>
+        </div>`).join("");
+    }
+
+    function filterCategory(category) {
+      activeCategory = category;
+      document.getElementById("categoryFilter").value = category;
+      document.querySelectorAll(".category-card").forEach(button => {
+        button.classList.toggle("selected", button.textContent.trim() === category);
+      });
+      renderProducts();
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        if (item.quantity >= product.stock) {
+          alert("Quantidade máxima disponível em estoque atingida.");
+          return;
+        }
+        item.quantity++;
+      } else {
+        cart.push({id, quantity:1});
+      }
+      renderCart();
+    }
+
+    function changeQuantity(id, delta) {
+      const item = cart.find(i => i.id === id);
+      const product = products.find(p => p.id === id);
+      if (!item) return;
+      const next = item.quantity + delta;
+      if (next <= 0) cart = cart.filter(i => i.id !== id);
+      else if (next <= product.stock) item.quantity = next;
+      else alert("Quantidade máxima disponível em estoque atingida.");
+      renderCart();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      renderCart();
+    }
+
+    function renderCart() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const total = cart.reduce((sum, item) => {
+        const product = products.find(p => p.id === item.id);
+        return sum + product.price * item.quantity;
+      }, 0);
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartSubtitle").textContent = `${count} item(ns)`;
+      document.getElementById("cartTotal").textContent = money(total);
+      const container = document.getElementById("cartItems");
+      if (!cart.length) {
+        container.innerHTML = `<div class="text-center py-5"><i class="bi bi-bag display-4 text-secondary"></i><p class="fw-bold mt-3 mb-1">Seu carrinho está vazio</p><p class="small text-secondary">Adicione produtos para começar.</p></div>`;
+        return;
+      }
+      container.innerHTML = cart.map(item => {
+        const p = products.find(product => product.id === item.id);
+        return `<div class="cart-item">
+          <div class="cart-thumb"><i class="bi ${p.icon}"></i></div>
+          <div><div class="fw-bold small">${p.name}</div><div class="small text-secondary">${money(p.price)}</div>
+            <div class="qty-control d-flex align-items-center gap-2 mt-2">
+              <button onclick="changeQuantity(${p.id},-1)" aria-label="Diminuir">−</button><span class="small fw-bold">${item.quantity}</span><button onclick="changeQuantity(${p.id},1)" aria-label="Aumentar">+</button>
+            </div>
+          </div>
+          <button class="btn btn-sm text-danger align-self-start" onclick="removeFromCart(${p.id})" aria-label="Remover ${p.name}"><i class="bi bi-trash"></i></button>
+        </div>`;
+      }).join("");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", renderProducts);
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
